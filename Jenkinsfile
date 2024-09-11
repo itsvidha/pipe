@@ -1,22 +1,25 @@
 pipeline {
     agent any 
+    environment {
+        course = "Devops mastery"
+        name = "Siva" 
+    }
     stages {
-        stage ('hello'){
+        stage ('Build') {
+            environment {
+                cloud = "GCP"   
+            }
             steps {
-                echo "hello !!!!"
+                echo "Welcome ${name}"
+                echo "You enrolled for ${course} course"
+                echo "You are certified in ${cloud} course"
             }
         }
-        stage ('sricptstage'){
+        stage ('secondstage'){
             steps {
-                script {
-                    def course = "k8s"
-                    if (course == 'k8s')
-                      println("Thanks for enrolling to ${course}")
-                    else 
-                      println ("Do enroll")
-                    //sleep 60 // seconds
-                    echo "Script block ended here"
-                }
+                echo "Welcome ${name}"
+                echo "You enrolled for ${course} course"
+                echo "You are certified in ${cloud} course"
             }
         }
     }
