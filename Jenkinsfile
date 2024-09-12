@@ -19,7 +19,7 @@ pipeline {
                 anyOf {
                     // any of the below condition can be satisifed for this stage to be executed 
                     branch 'stage'
-                    environment name: 'DEPLOY_TO', value: 'productions'
+                    environment name: 'DEPLOY_TO', value: 'production'
                 }
             }
             steps {
