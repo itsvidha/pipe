@@ -3,23 +3,40 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
-                echo "Welcome to Build Stage"
+                echo "Building the Cart service"
             }
         }
-        stage ('Depkoy to dev') {
-            steps {
-                echo "Deploying to dev environment"
-            }
-        }
-        stage ('Deploy to Stage') {
-            when {
-                expression {
-                    // stage should execute with either production branch or staging branch
-                    BRANCH_NAME ==~ /(production|staging)/
+        stage ('Stages Running in Parallel') {
+            parallel {
+                stage ('SonarScan') {
+                    steps {
+                        echo "Executing Sonar Scan"
+                        sleep 10
+                    }
+                }
+                stage ('FortifyScan') {
+                    steps {
+                        echo "Executing Fortify Scan"
+                        sleep 10
+                       // error "Simulating error during fortify"
+                    }
+                }
+                stage ('Checkmarx Scan') {
+                    steps {
+                        echo "Executing Checkmarx Scan"
+                        sleep 10
+                    }
                 }
             }
+        }
+        stage ('Deploy to Dev') {
             steps {
-                echo "Deploying to Stage Environment "
+                echo "Deploying cart service to dev"
+            }
+        }
+        stage ('Deploy to Test') {
+            steps {
+                echo "Deploying cart service to test"
             }
         }
     }
