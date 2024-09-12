@@ -16,10 +16,10 @@ pipeline {
         }
         stage ('Deploy to Stage') {
             when {
-                allOf {
-                    // the below all conditions should be satisfied inorder for this stage tot execute
-                    branch 'production'
-                    environment name: 'DEPLOY_TO', value: 'production'
+                anyOf {
+                    // any of the below condition can be satisifed for this stage to be executed 
+                    branch 'stage'
+                    environment name: 'DEPLOY_TO', value: 'productions'
                 }
             }
             steps {
