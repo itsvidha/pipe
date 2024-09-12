@@ -1,43 +1,20 @@
 pipeline {
-    agent any 
-    stages {
-        stage ('Build') {
-            steps {
-                echo "Building the Cart service"
+    agent any
+    parameter{
+        string(name: 'PERSON',  defaultValue: 'Dhanush', description: 'Please Enter your name')
+        string (name: 'BRANCH_NAME', defaultValue: "main", description: 'Whats the branch i should build??') 
+        booleanParam(name: 'DEBUG_BUILD', defaultValue: true, description: 'toogle this value')
+        choice(name: 'ENV', choices: ['dev', 'tst', 'stg', 'prd'], description: 'choose an environment'   
+    }
+    stages{
+        stage('Example'){
+            steps{
+                echo "welcome mr.${params.PERSON}"
+                echo "Boolean parameter is: ${params.TOOGLE}"
+                echo "Deploying to ${params.ENV} environment"
             }
-        }
-        stage ('Stages Running in Parallel') {
-            parallel {
-                stage ('SonarScan') {
-                    steps {
-                        echo "Executing Sonar Scan"
-                        sleep 10
-                    }
-                }
-                stage ('FortifyScan') {
-                    steps {
-                        echo "Executing Fortify Scan"
-                        sleep 10
-                       // error "Simulating error during fortify"
-                    }
-                }
-                stage ('Checkmarx Scan') {
-                    steps {
-                        echo "Executing Checkmarx Scan"
-                        sleep 10
-                    }
-                }
-            }
-        }
-        stage ('Deploy to Dev') {
-            steps {
-                echo "Deploying cart service to dev"
-            }
-        }
-        stage ('Deploy to Test') {
-            steps {
-                echo "Deploying cart service to test"
-            }
+
         }
     }
+
 }
