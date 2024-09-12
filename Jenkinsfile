@@ -7,7 +7,9 @@ pipeline {
         stage('deploy')
         {
             when{
+                not{
                 equals expected: 12 , actual: currentBuild.number
+                }
             }
             steps{
                 echo "deploying"
