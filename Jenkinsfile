@@ -1,25 +1,16 @@
 pipeline {
-    agent any 
-    environment {
-        course = "Devops mastery"
-        name = "Siva" 
+    agent any
+    environment{
+        DEPLOY_TO = "prod"
     }
-    stages {
-        stage ('Build') {
-            environment {
-                cloud = "GCP"   
+    stages{
+        stage('deploy')
+        {
+            when{
+                environment name : "DEPLOY_TO", value: "prod"
             }
-            steps {
-                echo "Welcome ${name}"
-                echo "You enrolled for ${course} course"
-                echo "You are certified in ${cloud} course"
-            }
-        }
-        stage ('secondstage'){
-            steps {
-                echo "Welcome ${name}"
-                echo "You enrolled for ${course} course"
-                echo "You are certified in ${cloud} course"
+            steps{
+                echo "deploying"
             }
         }
     }
