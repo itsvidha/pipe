@@ -7,7 +7,7 @@ pipeline {
         stage('deploy')
         {
             when{
-                environment name : "DEPLOY_TO", value: "prod"
+                equals expected: 12 , actual: currentBuild.number
             }
             steps{
                 echo "deploying"
