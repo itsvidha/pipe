@@ -15,7 +15,7 @@ pipeline {
             when {
                 expression {
                     // stage should execute with either production branch or staging branch
-                    BRANCH_NAME ==~ /(production|staging)/
+                    BRANCH_NAME ==~ /(production|stage)/
                 }
             }
             steps {
