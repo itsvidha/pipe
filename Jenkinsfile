@@ -1,5 +1,8 @@
 pipeline {
     agent any 
+    environment {
+        DEPLOY_TO = 'production' // this is static, we shall see about dynamic in parameter section
+    }
     stages {
         stage ('Build') {
             steps {
@@ -13,9 +16,10 @@ pipeline {
         }
         stage ('Deploy to Stage') {
             when {
-                expression {
-                    // stage should execute with either production branch or staging branch
-                    BRANCH_NAME ==~ /(production|stage)/
+                allOf {
+                    // the below all conditions should be satisfied inorder for this stage tot execute
+                    branch 'production'
+                    environment name: 'DEPLOY_TO', value: 'production'
                 }
             }
             steps {
